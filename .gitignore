@@ -1,0 +1,28 @@
+# --- Python / Django ---
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# entornos virtuales
+venv/
+.venv/
+
+# ficheros de entorno
+.env
+.env.*
+
+# salidas de Django
+staticfiles/
+media/
+
+# datos de Postgres
+pgdata/
+
+# logs y temporales
+*.log
+*.tmp
+.DS_Store
+
+# Docker build cache
+**/.mypy_cache/
+**/.pytest_cache/

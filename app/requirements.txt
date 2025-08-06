@@ -1,0 +1,44 @@
+# Requisitos
+
+# Para producción, en el futuro, podrías incluir whitenoise si no usás nginx para static:
+# whitenoise>=6.6.0
+
+# Django + Tailwind (HEAD del branch main)               ▼ extra "reload"
+#django-tailwind[reload] @ git+https://github.com/timonweb/django-tailwind.git@master#egg=django-tailwindo: versión estable pero moderna
+Django>=5.0,<5.1
+
+# Gunicorn: servidor WSGI para producción
+gunicorn>=21.2.0
+
+# PostgreSQL driver
+psycopg2-binary>=2.9.9
+
+# python-dotenv: para cargar el archivo .env en settings.py
+python-dotenv>=1.0.1
+
+# Opcionalmente útil para validación o estructuras robustas
+# djangorestframework>=3.15.0
+django-environ>=0.11.2
+
+# Para producción, en el futuro, podrías incluir whitenoise si no usás nginx para static:
+# whitenoise>=6.6.0
+
+# Django + Tailwind (HEAD del branch main)               ▼ extra “reload”
+#django-tailwind[reload] @ git+https://github.com/timonweb/django-tailwind.git@master#egg=django-tailwind
+
+# # Para manejo de imágenes
+Pillow>=11.3.0
+
+# Validaciones adicionales
+django-phonenumber-field>=7.3.0
+
+# 🎨 UI y Formularios
+django-crispy-forms>=2.3
+crispy-bootstrap5>=2024.10
+django-widget-tweaks>=1.5.0
+
+# 🔧 Herramientas de Desarrollo  
+django-extensions>=3.2.3
+django-debug-toolbar>=4.4.6
+
+django-health-check>=3.17.0

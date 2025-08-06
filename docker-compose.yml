@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  web:
+    # no se pone container_name pq si no genera un conflicto
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile
+    command: /entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app
+      - ./static:/app/static              # Volumen compartido (lectura/escritura)
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    expose:
+      - "8000"
+    depends_on:
+      - db
+
+  db:
+    # no se pone container_name pq si no genera un conflicto
+    image: postgres:14                      # versión más estable y robusta
+    restart: unless-stopped                 # chatGPT recomienda q esté en "always" en PROD
+    environment:
+      POSTGRES_DB: ${DB_NAME:-db}
+      POSTGRES_USER: ${DB_USER:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data   # cada entorno debe tener su propia BBDD independiente
+    ports:
+      - "${DB_PORT_EXTERNAL:-55432}:5432"      # se cambia el puerto interno pq el Synology ya usa ese puerto para su propio PostgreSQL
+
+  nginx:
+    # no se pone container_name pq si no genera un conflicto
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "${NGINX_PORT:-443}:${NGINX_PORT_2:-80}"
+    volumes:
+      - ./nginx/${ENVIRONMENT}.default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /usr/syno/etc/certificate/_archive/7pzvYh:/etc/synology-certs:ro # Monta el directorio de certificados de Let's Encrypt
+      - ./static:/app/static:ro           # Monta volumen solo lectura (RO)
+      - ./staticfiles:/app/staticfiles:ro
+      - ./media:/app/media:ro
+    depends_on:
+      - web

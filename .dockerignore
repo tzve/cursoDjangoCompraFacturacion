@@ -1,0 +1,20 @@
+# ignora histórico de Git
+.git
+*.log
+
+# bases de datos y volúmenes
+pgdata/
+media/
+staticfiles/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# entornos y variables
+venv/
+.env
+*.env
+
+# node_modules (los de tu host, no los que copie el Dockerfile)
+node_modules/
